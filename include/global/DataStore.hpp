@@ -48,7 +48,7 @@ namespace Configs {
     public:
         // Running
 
-        int core_port = 19811;
+        int core_port = -1;
         int started_id = -1919;
         bool core_running = false;
         bool prepare_exit = false;
