@@ -21,8 +21,7 @@ import (
 )
 
 func RunCore() {
-	_port := flag.Int("port", 19810, "Core listening port")
-	flag.Parse()
+	_port := flag.Int("port", 19811, "")
 	_debug := flag.Bool("debug", false, "")
 	flag.CommandLine.Parse(os.Args[1:])
 	debug = *_debug
