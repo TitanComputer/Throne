@@ -20,8 +20,23 @@ import (
 	C "github.com/sagernet/sing-box/constant"
 )
 
+func GetAvailablePort(start int) (int, error) {
+    for port := start; port < 65535; port++ {
+        ln, err := net.Listen("tcp", fmt.Sprintf("127.0.0.1:%d", port))
+        if err == nil {
+            ln.Close()
+            return port, nil
+        }
+    }
+    return 0, fmt.Errorf("no available port found")
+}
+
 func RunCore() {
-	_port := flag.Int("port", 19811, "")
+	port, err := GetAvailablePort(19810)
+	if err != nil {
+	    log.Fatalf("Failed to find free port: %v", err)
+	}
+	fmt.Printf("Using core port: %d\n", port)
 	_debug := flag.Bool("debug", false, "")
 	flag.CommandLine.Parse(os.Args[1:])
 	debug = *_debug
