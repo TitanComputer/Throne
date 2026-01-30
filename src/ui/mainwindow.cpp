@@ -148,15 +148,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     runOnNewThread([=, this] {GetDeviceDetails(); });
 
     // Prepare core
-	int startPort = 19810;
-	int foundPort = -1;
-	for (int p = startPort; p < startPort + 100; p++) {
-	    if (IsPortAvailable(p)) {
-	        foundPort = p;
-	        break;
-	    }
-	}
-	Configs::dataStore->core_port = (foundPort != -1) ? foundPort : startPort;
+    Configs::dataStore->core_port = MkPort();
+    if (Configs::dataStore->core_port <= 0) Configs::dataStore->core_port = 19811;
 
     auto core_path = QApplication::applicationDirPath() + "/";
     core_path += "Core";
